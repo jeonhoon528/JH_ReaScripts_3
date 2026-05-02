@@ -1,36 +1,21 @@
-## 🇰🇷 한국어
+## 동작 방식
 
-### 기능 설명
-Arrange(아이템 영역)에서 마우스 **우클릭 드래그(마키 선택)**를 사용하여  
-여러 트랙에 걸친 아이템들을 한 번에 선택할 수 있습니다.
+`JH_auto_select_tracks_of_selected_items.lua`는 REAPER에서 현재 선택된 미디어 아이템을 지속적으로 감지합니다.
 
-이때, 선택된 아이템들이 속한 **모든 트랙이 자동으로 선택**됩니다.
+- 선택된 아이템이 포함된 모든 트랙을 수집
+- 이전 트랙 선택 상태와 비교
+- 실제로 변경이 필요한 트랙만 선택 상태 갱신
+- 필요한 경우에만 Arrange 뷰를 갱신
 
-### 주요 특징
-- 여러 트랙의 아이템을 한 번에 선택 가능
-- 아이템 선택과 트랙 선택 자동 동기화
-- 트랙 패널을 따로 클릭할 필요 없음
-- 멀티 트랙 작업 시 작업 효율 향상
+이를 통해 아이템 선택과 트랙 선택을 항상 동기화하면서, 불필요한 업데이트를 줄여 마키 선택 시 더 부드러운 동작을 제공합니다.
 
-### 사용 방법
-1. Arrange 영역에서 우클릭 드래그로 아이템 선택
-2. 선택된 아이템 기준으로 해당 트랙들이 자동 선택됨
+## How It Works
 
----
+`JH_auto_select_tracks_of_selected_items.lua` continuously monitors the currently selected media items in REAPER.
 
-## 🇺🇸 English
+- It collects all tracks that contain the selected items
+- Compares them with the previously selected track set
+- Updates only the tracks whose selection state needs to change
+- Refreshes the arrange view only when necessary
 
-### Feature Description
-In the Arrange view, you can use **right-drag (marquee selection)** to select multiple items across different tracks.
-
-All tracks containing the selected items will be **automatically selected**.
-
-### Key Features
-- Select items across multiple tracks at once
-- Automatically sync item selection with track selection
-- No need to manually click track panels
-- Improves workflow efficiency for multi-track editing
-
-### Usage
-1. Right-drag in the Arrange view to select items
-2. Tracks containing those items will be automatically selected
+This ensures that track selection always stays in sync with item selection, while minimizing unnecessary updates for better performance and smoother interaction during marquee selection.

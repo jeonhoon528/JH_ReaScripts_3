@@ -4,6 +4,7 @@
 local _, _, section_id, command_id = reaper.get_action_context()
 
 local last_signature = ""
+local last_tracks = {}
 
 local function selected_items_signature()
   local count = reaper.CountSelectedMediaItems(0)
@@ -29,15 +30,30 @@ local function select_tracks_for_selected_items()
     end
   end
 
+  local changed = false
   reaper.PreventUIRefresh(1)
 
-  for i = 0, reaper.CountTracks(0) - 1 do
-    local track = reaper.GetTrack(0, i)
-    reaper.SetTrackSelected(track, tracks[track] == true)
+  for track in pairs(last_tracks) do
+    if not tracks[track] and reaper.GetMediaTrackInfo_Value(track, "I_SELECTED") ~= 0 then
+      reaper.SetTrackSelected(track, false)
+      changed = true
+    end
+  end
+
+  for track in pairs(tracks) do
+    if reaper.GetMediaTrackInfo_Value(track, "I_SELECTED") == 0 then
+      reaper.SetTrackSelected(track, true)
+      changed = true
+    end
   end
 
   reaper.PreventUIRefresh(-1)
-  reaper.UpdateArrange()
+
+  if changed then
+    reaper.UpdateArrange()
+  end
+
+  last_tracks = tracks
 end
 
 local function loop()
